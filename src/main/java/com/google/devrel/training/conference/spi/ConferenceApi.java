@@ -46,8 +46,6 @@ public class ConferenceApi {
     // The request that invokes this method should provide data that
     // conforms to the fields defined in ProfileForm
 
-    // TODO 1 Pass the ProfileForm parameter
-    // TODO 2 Pass the User parameter
     public Profile saveProfile(final User user, ProfileForm profileForm) throws UnauthorizedException {
 
         String userId = null;
@@ -55,30 +53,25 @@ public class ConferenceApi {
         String displayName = "Your name will go here";
         TeeShirtSize teeShirtSize = TeeShirtSize.NOT_SPECIFIED;
 
-        // TODO 2
         // If the user is not logged in, throw an UnauthorizedException
         if(user == null) {
         	throw new UnauthorizedException("Authorization required");
         }
 
-        // TODO 1
         // Set the teeShirtSize to the value sent by the ProfileForm, if sent
         // otherwise leave it as the default value
         displayName = profileForm.getDisplayName();
 
-        // TODO 1
         // Set the displayName to the value sent by the ProfileForm, if sent
         // otherwise set it to null
         if(profileForm.getTeeShirtSize() != null) {
         	teeShirtSize = profileForm.getTeeShirtSize();
         }
 
-        // TODO 2
         // Get the userId and mainEmail
         mainEmail = user.getEmail();
         userId = user.getUserId();
 
-        // TODO 2
         // If the displayName is null, set it to default value based on the user's email
         // by calling extractDefaultDisplayNameFromEmail(...)
         if(displayName == null) {
@@ -89,8 +82,8 @@ public class ConferenceApi {
         // userId, displayName, mainEmail and teeShirtSize
         Profile profile = new Profile(userId, displayName, mainEmail, teeShirtSize);
 
-        // TODO 3 (In Lesson 3)
         // Save the Profile entity in the datastore
+        ofy().save().entity(profile).now();
 
         // Return the profile
         return profile;
@@ -112,11 +105,10 @@ public class ConferenceApi {
             throw new UnauthorizedException("Authorization required");
         }
 
-        // TODO
         // load the Profile Entity
-        String userId = ""; // TODO
-        Key key = null; // TODO
-        Profile profile = null; // TODO load the Profile entity
+        String userId = user.getUserId();
+        Key key = Key.create(Profile.class, userId);
+        Profile profile = (Profile)ofy().load().key(key).now();
         return profile;
     }
 }
