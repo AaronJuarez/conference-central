@@ -197,6 +197,18 @@ public class ConferenceApi {
     	
     	return query.list();
     }
+    
+    @ApiMethod(
+    		name = "filterPlayground",
+    		path = "filterPlayground",
+    		httpMethod = HttpMethod.GET
+    )
+    public List<Conference> filterPlayground() {
+    	Query<Conference> query = ofy().load().type(Conference.class).order("name");
+    	query = query.filter("city =", "London");
+    	query = query.filter("topics =", "Medical Innovations");
+    	return query.list();
+    }
 
     
 }
