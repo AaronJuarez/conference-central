@@ -43,6 +43,12 @@
             <artifactId>objectify</artifactId>
             <version>5.0</version>
         </dependency>
+        <dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-labs</artifactId>
+			<version>${appengine.target.version}</version>
+			<!-- <scope>test</scope> -->
+		</dependency>
 
         <!-- Test Dependencies -->
         <dependency>
